@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import { AppRegistry,StyleSheet,View,Modal,FlatList,TouchableHighlight,Alert,TouchableOpacity} from 'react-native';
-import { IconButton,Text,Card,List} from 'react-native-paper';
+import { IconButton,Text,Card} from 'react-native-paper';
 import { FAB} from 'react-native-paper';
 
 
@@ -49,30 +49,33 @@ export default class PalletsScreen extends Component {
           onRequestClose={() => {
             Alert.alert('Modal has been closed.');
           }}>
-          
+          <View style={{display:'flex', height:'100%',flexDirection:'column',alignContent: 'space-between',justifyContent:'space-between'}}>
+
           <TouchableOpacity   onPress={() => {
                   this.setModalVisible(!this.state.modalVisible);
                 }}>
-          <View style={{display:'flex', height:'100%',flexDirection:'column',backgroundColor:'rgba(0,0,0,0.5)',alignContent: 'space-between',justifyContent:'flex-end'}}>
+            <View style={{height:'80%',backgroundColor:'rgba(0,0,0,0.5)'}}>
+              
+            </View>
+            </TouchableOpacity>
 
 
-<View style={{backgroundColor:'white'}}>
-<TouchableOpacity>
-<List.Item
-    title="Move"
-    left={props => <List.Icon {...props} icon="redo" />}
-  />
-</TouchableOpacity>
-<TouchableOpacity>
-  <List.Item
-    title="Delete"
-    left={props => <List.Icon {...props} icon="delete" />}
-  />
-   </TouchableOpacity>
+            <View style={{height:'20%',backgroundColor:'white'}}>
+    <FlatList
+        data={[{key: 'Move'}, {key: 'Delete'}]}
+        renderItem={({item}) =>
+        <TouchableOpacity>
+             <Text>{item.key}</Text>
+        </TouchableOpacity>
+        }
+        />
+
+
 
             </View>
+
+
           </View>
-          </TouchableOpacity>
         </Modal>
               </View>
         <Card>
