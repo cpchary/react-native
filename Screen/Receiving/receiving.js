@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { AppRegistry,StyleSheet,View,TouchableOpacity} from 'react-native';
+import { AppRegistry,StyleSheet,View,Text,Image} from 'react-native';
 import { IconButton, } from 'react-native-paper';
 import { Searchbar } from 'react-native-paper';
 
@@ -38,13 +38,29 @@ export default class ReceivingScreen extends Component {
       <View style={styles.container}> 
        
         <Searchbar
-        placeholder="Search"
+        inputStyle={styles.searchBarInput}
+        placeholder="Enter continer or lane Number"
         onChangeText={query => { this.setState({ firstQuery: query }); }}
         value={this.state.firstQuery}
-        icon={null}
+        icon={require('../../assets/barcode.png')}
         onIconPress={this.onPressChange}
       />
-  
+
+      <View style={styles.searchResult}>
+
+      {/* <View>
+            <Text>Scan Carton or Label</Text>
+      </View> */}
+
+      <View style={styles.imgContainer}>
+      <Text style={styles.imgText}>Scan container or lane to continue</Text>
+             <Image source={require('../../assets/box.png')} style={{width: 300, height: 300,resizeMode: 'center',}}>
+            
+            </Image>
+      </View>
+           
+      </View>
+
         
       </View>
      
@@ -59,6 +75,31 @@ const styles = StyleSheet.create({
         flexDirection:'column',
         justifyContent:'flex-start',
         height:'100%'
+    },
+    searchBarInput:{
+        fontSize:12
+    },
+    searchResult:{
+        display:'flex',
+        flexDirection:'column',
+        justifyContent:'space-around',
+        alignItems:'flex-start',
+        height:'100%',
+        width:'100%'
+    },
+    imgContainer:{
+        display:'flex',
+        flexDirection:'column',
+        justifyContent:'center',
+        alignItems:'center',
+        height:'100%',
+        width:'100%'
+    },
+    imgText:{
+        fontWeight:"600",
+        color:'#80807F',
+        textAlign:'center',
+        fontSize:20
     },
     input:{
         width:'100%',

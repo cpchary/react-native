@@ -6,6 +6,7 @@ import { RadioButton,Button,IconButton, Colors} from 'react-native-paper';
 import { Font } from 'expo';
 import { Searchbar } from 'react-native-paper';
 import { List } from 'react-native-paper';
+import { DrawerActions } from 'react-navigation';
 
 
 export default class SelectPrinterScreen extends Component {
@@ -22,14 +23,15 @@ export default class SelectPrinterScreen extends Component {
       console.log(this.state)
     }
 
-    static navigationOptions = {
+    static navigationOptions = ({navigation}) => (
+      {
       title: 'Select Printer',
       drawerLabel: 'selectPrinter',
       headerLeft:   <IconButton
       icon="menu"
       color={'white'}
       size={24}
-      onPress={() => {this.props.navigation.openDrawer()}}
+      onPress={() => { navigation.dispatch(DrawerActions.openDrawer());}}
     />,
     headerRight:<IconButton
     icon="refresh"
@@ -37,7 +39,8 @@ export default class SelectPrinterScreen extends Component {
     size={24}
     onPress={() => console.log('Pressed')}
   />,
-    }
+    })
+
     async componentDidMount() {
       await Font.loadAsync({
         'Roboto': require('./../../assets/fonts/Roboto.ttf'),
@@ -78,6 +81,7 @@ export default class SelectPrinterScreen extends Component {
           renderItem={({item}) =>
           <View style={styles.listView1}>
           <TouchableOpacity onPress={this.onPressChange}>
+         
                 <View style={styles.listView}>
                     <RadioButton
                     status={this.state.checked === 'first' ? 'checked' : 'unchecked'}
@@ -85,7 +89,7 @@ export default class SelectPrinterScreen extends Component {
                     />
                     <Text style={styles.item}>{item.key}</Text>
                 </View>
-                <Divider/>
+             
                 </TouchableOpacity>
           </View>
 
@@ -110,13 +114,17 @@ const styles = StyleSheet.create({
         justifyContent:'center',
         height:'100%'
     },
+    divider:{
+      backgroundColor:'rgba(0,0,0,.12)',
+      height:1
+    },
     total:{
       marginTop:8,
       textAlign:'right'
     },
     item: {
       padding: 10,
-      fontSize: 18,
+      fontSize: 15,
       height: 44,
     },
     heading:{
@@ -151,12 +159,12 @@ const styles = StyleSheet.create({
       flexDirection:'row',
       justifyContent:'flex-start',
       alignItems:'flex-start',
+      borderColor:'rgba(0,0,0,.12)',
+      borderWidth:.5
     },
     listView1:{
       display:'flex',
       flexDirection:'column',
-      paddingBottom:12,
-      paddingTop:12
     }
   });
 

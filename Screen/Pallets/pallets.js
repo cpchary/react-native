@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
-import { AppRegistry,StyleSheet,View} from 'react-native';
-import { IconButton,Text,Card} from 'react-native-paper';
+import { AppRegistry,StyleSheet,View,Modal,FlatList,TouchableHighlight,Alert,TouchableOpacity} from 'react-native';
+import { IconButton,Text,Card,List} from 'react-native-paper';
 import { FAB} from 'react-native-paper';
 
 
@@ -9,18 +9,25 @@ export default class PalletsScreen extends Component {
     constructor(props)
     {
       super(props);
+      this.state={
+        modalVisible: false
+      }
     }
 
-    static navigationOptions = {
+    setModalVisible(visible) {
+        this.setState({modalVisible: visible});
+      }
+
+    static navigationOptions = ({navigation}) => ({
       title: 'Pallets',
       headerLeft:   <IconButton
       icon="arrow-back"
       color={'white'}
       size={24}
-      onPress={() => console.log('Pressed')}
+      onPress={()=>{navigation.goBack()}}
     />,
     headerRight:null,
-    }
+    })
 
 
     onPressChange=()=>{
@@ -29,8 +36,45 @@ export default class PalletsScreen extends Component {
  
     render()
     {
+
   return (
       <View style={styles.container}> 
+
+          <View>
+          <Modal
+          animationType="slide"
+          transparent={false}
+          visible={this.state.modalVisible}
+          transparent={true}
+          onRequestClose={() => {
+            Alert.alert('Modal has been closed.');
+          }}>
+          
+          <TouchableOpacity   onPress={() => {
+                  this.setModalVisible(!this.state.modalVisible);
+                }}>
+          <View style={{display:'flex', height:'100%',flexDirection:'column',backgroundColor:'rgba(0,0,0,0.5)',alignContent: 'space-between',justifyContent:'flex-end'}}>
+
+
+<View style={{backgroundColor:'white'}}>
+<TouchableOpacity>
+<List.Item
+    title="Move"
+    left={props => <List.Icon {...props} icon="redo" />}
+  />
+</TouchableOpacity>
+<TouchableOpacity>
+  <List.Item
+    title="Delete"
+    left={props => <List.Icon {...props} icon="delete" />}
+  />
+   </TouchableOpacity>
+
+            </View>
+          </View>
+          </TouchableOpacity>
+        </Modal>
+              </View>
         <Card>
             <View style={styles.card}>
 
@@ -81,7 +125,9 @@ export default class PalletsScreen extends Component {
     style={styles.fab}
     color={'white'}
     icon="print"
-    onPress={() => console.log('Pressed')}
+    onPress={() => {
+            this.setModalVisible(true);
+          }}
   />
       </View>
      
@@ -90,6 +136,21 @@ export default class PalletsScreen extends Component {
 }
 
 const styles = StyleSheet.create({
+    buttonText: {
+        fontSize: 16,
+        fontWeight: 'bold',
+        textAlign: 'center',
+        margin: 10,
+        color: '#d0d0d0',
+      },
+    button: {
+        backgroundColor: 'green',
+        width: 300,
+        marginTop: 16,
+        textAlign: 'center',
+        marginLeft: 10,
+        marginRight: 10,
+      },
     container:{
         display:'flex',
         paddingLeft:6,
@@ -138,6 +199,14 @@ const styles = StyleSheet.create({
         paddingRight:8,
         borderRadius:2 
     },
+    modal: {
+        justifyContent: 'center',
+        alignItems: 'center',
+      },
+      modal4: {
+        height: 300,
+      },
+
     palletStatusText:{
         color:'white',
     
